@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "744275165521",
+    "project_id": "ungfunny",
+    "storage_bucket": "ungfunny.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744275165521:android:2eb34fa9f50da8a3ca9370",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.ungfunny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744275165521-al8mufo4khljvthtjpt7lg8n77dgf442.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApgbaUf5JsCCyDGqfUiJLIXvvI1sK5EHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744275165521-al8mufo4khljvthtjpt7lg8n77dgf442.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
