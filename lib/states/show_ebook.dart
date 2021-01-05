@@ -50,18 +50,20 @@ class _ShowEbookState extends State<ShowEbook> {
         dilogConfirm(ebookModels[index]);
       },
       child: Card(
-        child: Column(
-          children: [
-            Container(
-              width: 80,
-              height: 120,
-              child: Image.network(model.cover),
-            ),
-            Text(
-              shortName(model.name),
-              style: TextStyle(fontSize: 12),
-            )
-          ],
+        child: Container(padding: EdgeInsets.all(8),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(margin: EdgeInsets.only(bottom: 16),
+                width: 80,
+                height: 100,
+                child: Image.network(model.cover),
+              ),
+              Text(
+                shortName(model.name),
+                style: TextStyle(fontSize: 12),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -73,7 +75,7 @@ class _ShowEbookState extends State<ShowEbook> {
       body: widgets.length == 0
           ? CircularProgressIndicator()
           : GridView.extent(
-              maxCrossAxisExtent: 200,
+              maxCrossAxisExtent: 220,
               children: widgets,
             ),
     );
