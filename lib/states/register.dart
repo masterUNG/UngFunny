@@ -12,11 +12,12 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   String name, email, password;
+  bool normalScreen = true;
 
   Container buildContainerName() {
     return Container(
-      margin: EdgeInsets.only(top: 16),
-      width: 250,
+      margin: EdgeInsets.only(top: 100),
+      width: normalScreen ? 250 : 500,
       child: TextField(
         onChanged: (value) => name = value.trim(),
         decoration: InputDecoration(
@@ -31,7 +32,7 @@ class _RegisterState extends State<Register> {
   Container buildContainerEmail() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: 250,
+      width: normalScreen ? 250 : 500,
       child: TextField(
         onChanged: (value) => email = value.trim(),
         decoration: InputDecoration(
@@ -46,7 +47,7 @@ class _RegisterState extends State<Register> {
   Container buildContainerPassword() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: 250,
+      width: normalScreen ? 250 : 500,
       child: TextField(
         onChanged: (value) => password = value.trim(),
         decoration: InputDecoration(
@@ -85,8 +86,30 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 1000) {
+      normalScreen = false;
+    }
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      appBar: AppBar(
+        title: Text('New Registor'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            buildContainerName(),
+            buildContainerEmail(),
+            buildContainerPassword(),
+            buildFloatingActionButton(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildFloatingActionButton(BuildContext context) {
+    return Container(margin: EdgeInsets.only(top: 16),
+      width: normalScreen ? 250 : 500,
+      child: ElevatedButton(
         onPressed: () {
           print('name = $name, email = $email, password = $password');
           if (name == null ||
@@ -101,18 +124,6 @@ class _RegisterState extends State<Register> {
           }
         },
         child: Text('Regis'),
-      ),
-      appBar: AppBar(
-        title: Text('New Registor'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            buildContainerName(),
-            buildContainerEmail(),
-            buildContainerPassword(),
-          ],
-        ),
       ),
     );
   }

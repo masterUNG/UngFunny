@@ -12,6 +12,8 @@ class Authen extends StatefulWidget {
 
 class _AuthenState extends State<Authen> {
   String email, password;
+  double screen;
+  bool normalScreen = true;
 
   @override
   void initState() {
@@ -37,6 +39,11 @@ class _AuthenState extends State<Authen> {
 
   @override
   Widget build(BuildContext context) {
+    screen = MediaQuery.of(context).size.width;
+    if (screen > 1000) {
+      normalScreen = false;
+    }
+    print('screen = $screen');
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -48,6 +55,7 @@ class _AuthenState extends State<Authen> {
         child: Center(
           child: SingleChildScrollView(
             child: Container(
+              width: normalScreen ? 300 : screen - 200,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(color: Colors.white54),
               child: Column(
@@ -84,7 +92,7 @@ class _AuthenState extends State<Authen> {
   Container buildContainerLogin() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: 250,
+      width: normalScreen ?  250: 500,
       child: ElevatedButton(
         onPressed: () {
           print('email = $email, password = $password');
@@ -105,7 +113,7 @@ class _AuthenState extends State<Authen> {
   Container buildContainerUser() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: 250,
+      width: normalScreen ?  250: 500,
       child: TextField(
         onChanged: (value) => email = value.trim(),
         decoration: InputDecoration(
@@ -120,7 +128,7 @@ class _AuthenState extends State<Authen> {
   Container buildContainerPassword() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: 250,
+      width: normalScreen ?  250: 500,
       child: TextField(
         onChanged: (value) => password = value.trim(),
         obscureText: true,
@@ -138,7 +146,7 @@ class _AuthenState extends State<Authen> {
         child: Text(
           'Ung Funny',
           style: TextStyle(
-            fontSize: 22,
+            fontSize: normalScreen ? 22 : 44,
             color: Colors.pink.shade900,
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.italic,
@@ -148,7 +156,7 @@ class _AuthenState extends State<Authen> {
 
   Container buildContainerLogo() {
     return Container(
-      width: 120,
+      width: normalScreen ?  120: 240,
       child: Image.asset('images/logo.png'),
     );
   }

@@ -12,6 +12,7 @@ class ShowEbook extends StatefulWidget {
 class _ShowEbookState extends State<ShowEbook> {
   List<Widget> widgets = List();
   List<EbookModel> ebookModels = List();
+  bool normalScreen = true;
 
   @override
   void initState() {
@@ -50,17 +51,20 @@ class _ShowEbookState extends State<ShowEbook> {
         dilogConfirm(ebookModels[index]);
       },
       child: Card(
-        child: Container(padding: EdgeInsets.all(8),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(margin: EdgeInsets.only(bottom: 16),
-                width: 80,
-                height: 100,
+              Container(
+                margin: EdgeInsets.only(bottom: 16),
+                width: normalScreen ?  80: 160,
+                height: normalScreen ? 100 : 200,
                 child: Image.network(model.cover),
               ),
               Text(
                 shortName(model.name),
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: normalScreen ?  12:  24),
               )
             ],
           ),
@@ -71,11 +75,14 @@ class _ShowEbookState extends State<ShowEbook> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 1000) {
+      normalScreen = false;
+    }
     return Scaffold(
       body: widgets.length == 0
           ? CircularProgressIndicator()
           : GridView.extent(
-              maxCrossAxisExtent: 220,
+              maxCrossAxisExtent: normalScreen ?  220: 500 ,
               children: widgets,
             ),
     );
@@ -99,9 +106,11 @@ class _ShowEbookState extends State<ShowEbook> {
           title: Text('Do you want to read eBook ?'),
         ),
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.network(ebookModel.cover),
+          Container(height: normalScreen ?  300: 600,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.network(ebookModel.cover),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -116,7 +125,9 @@ class _ShowEbookState extends State<ShowEbook> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ReadPdf(ebookModel: ebookModel,),
+                          builder: (context) => ReadPdf(
+                            ebookModel: ebookModel,
+                          ),
                         ));
                   },
                   child: Text('Read Ebook')),
