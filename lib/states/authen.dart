@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_state_button/progress_button.dart';
 import 'package:ungfunny/states/my_service.dart';
 import 'package:ungfunny/states/register.dart';
 import 'package:ungfunny/utility/dialog.dart';
@@ -65,8 +66,10 @@ class _AuthenState extends State<Authen> {
                   buildTextAppName(),
                   buildContainerUser(),
                   buildContainerPassword(),
-                  buildContainerLogin(),
+                  // buildContainerLogin(),
+                   progressButton(),
                   buildTextButton()
+                 
                 ],
               ),
             ),
@@ -92,28 +95,53 @@ class _AuthenState extends State<Authen> {
   Container buildContainerLogin() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: normalScreen ?  250: 500,
+      width: normalScreen ? 250 : 500,
       child: ElevatedButton(
         onPressed: () {
-          print('email = $email, password = $password');
-          if (email == null ||
-              email.isEmpty ||
-              password == null ||
-              password.isEmpty) {
-            normalDialog(context, 'Have Space ? Please Fill Every Blank');
-          } else {
-            checkAuthen();
-          }
+          checkSpace();
         },
         child: Text('Login'),
       ),
     );
   }
 
+  Widget progressButton() {
+    Map<ButtonState, Widget> stateWidgets = {
+      ButtonState.idle: Text('Idel'),
+      ButtonState.loading: Text('Loading'),
+      ButtonState.fail: Text('Fail'),
+      ButtonState.success: Text('Success'),
+    };
+
+    Map<ButtonState, Color> stateColors = {
+      ButtonState.idle: Colors.red,
+      ButtonState.loading: Colors.yellow,
+      ButtonState.fail: Colors.blue,
+      ButtonState.success: Colors.green,
+    };
+
+    return ProgressButton(
+      stateWidgets: stateWidgets,
+      stateColors: stateColors,state: ButtonState.idle,
+      onPressed: () {},
+    );
+  }
+
+  void checkSpace() {
+    if (email == null ||
+        email.isEmpty ||
+        password == null ||
+        password.isEmpty) {
+      normalDialog(context, 'Have Space ? Please Fill Every Blank');
+    } else {
+      checkAuthen();
+    }
+  }
+
   Container buildContainerUser() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: normalScreen ?  250: 500,
+      width: normalScreen ? 250 : 500,
       child: TextField(
         onChanged: (value) => email = value.trim(),
         decoration: InputDecoration(
@@ -128,7 +156,7 @@ class _AuthenState extends State<Authen> {
   Container buildContainerPassword() {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      width: normalScreen ?  250: 500,
+      width: normalScreen ? 250 : 500,
       child: TextField(
         onChanged: (value) => password = value.trim(),
         obscureText: true,
@@ -156,7 +184,7 @@ class _AuthenState extends State<Authen> {
 
   Container buildContainerLogo() {
     return Container(
-      width: normalScreen ?  120: 240,
+      width: normalScreen ? 120 : 240,
       child: Image.asset('images/logo.png'),
     );
   }
